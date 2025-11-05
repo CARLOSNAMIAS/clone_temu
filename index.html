@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Temu - Compra como un millonario</title>
+    <link rel="shortcut icon" href="/img/fav.png" type="image/png" />
+    <!-- External Libraries -->
+    <!-- Bootstrap for styling and components -->
+        <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN"
+      crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <!-- Font Awesome for icons -->
+        <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+      rel="stylesheet"
+      integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw=="
+      crossorigin="anonymous" referrerpolicy="no-referrer" />
+    
+    <!-- Custom Stylesheet -->
+    <link href="styles.css" rel="stylesheet" />
+</head>
+<body>
+
+    <!-- =================================================================== -->
+    <!-- TOP HEADER: Visible on all views                                    -->
+    <!-- =================================================================== -->
+    <header class="top-header">
+        <!-- Back button, initially hidden. Shown only in cart view. -->
+        <button class="back-btn" onclick="toggleView()" aria-label="Volver" style="display: none;">
+            <i class="fas fa-arrow-left"></i>
+        </button>
+        <div class="temu-logo">TEMU</div>
+        <div class="search-box">
+            <i class="fas fa-search" style="color: #999;"></i>
+            <input type="text" placeholder="explorado...">
+        </div>
+        <div class="top-icons">
+            <i class="fas fa-bars"></i>
+            <i class="fas fa-user"></i>
+            <!-- Cart icon toggles the view between products and cart -->
+            <div class="cart-icon-wrapper" onclick="toggleView()">
+                <i class="fas fa-shopping-cart"></i>
+                <div class="cart-count" id="topCartCount">0</div>
+            </div>
+        </div>
+    </header>
+
+    <!-- =================================================================== -->
+    <!-- MAIN CONTENT: Contains the two main views (Products and Cart)       -->
+    <!-- =================================================================== -->
+    <main id="appContainer">
+
+        <!-- --------------------------------- -->
+        <!-- PRODUCTS VIEW: Shows product grid -->
+        <!-- --------------------------------- -->
+        <div id="productsView">
+            <!-- App download banner, can be closed -->
+            <div class="app-banner" id="appBanner">
+              <button class="close-banner" onclick="closeBanner()">×</button>
+              <div class="app-icon">
+                <i class="fas fa-users"></i>
+                TEMU
+              </div>
+              <div class="app-info">
+                <h3>Temu: compra como un mil...</h3>
+                <p>¡Consigue ofertas increíbles en Te...</p>
+              </div>
+              <button class="btn-get">OBTENER</button>
+            </div>
+            <!-- The grid where products will be dynamically rendered by script.js -->
+            <div class="product-grid" id="productGrid"></div>
+        </div>
+
+        <!-- --------------------------------- -->
+        <!-- CART VIEW: Shows cart details     -->
+        <!-- Initially hidden                -->
+        <!-- --------------------------------- -->
+        <div id="cartView" style="display: none;">
+            <!-- Login promotion banner -->
+            <div class="login-banner">
+                <div class="login-text">Inicia sesión o regístrate para guardar tu carrito en tu cuenta.</div>
+                <button class="login-btn" onclick="showNotification('Función de inicio de sesión')">Iniciar sesión</button>
+            </div>
+            <!-- Cart-specific header -->
+            <div class="cart-header">
+                <div class="select-all">
+                    <div class="checkbox" id="selectAllCheckbox" onclick="toggleSelectAll()">
+                        <i class="fas fa-check"></i>
+                    </div>
+                    <span>Todos</span>
+                </div>
+                <div class="cart-title">Carrito (<span id="cartItemCount">0</span>)</div>
+                <div class="more-options">⋯</div>
+            </div>
+            <!-- Shipping and order banners -->
+            <div class="free-shipping">
+                <i class="fas fa-check-circle checkmark-green"></i>
+                <div class="free-shipping-text">Envío gratis especial para ti</div>
+                <div class="exclusive-badge">Oferta exclusiva</div>
+            </div>
+            <div class="minimum-order">
+                <i class="fas fa-shopping-cart cart-icon-small"></i>
+                <div class="minimum-text">
+                    Pedido mínimo de $39.000 (excluidos los artículos enviados por almacenes locales). Solo para nuevo...
+                    <i class="fas fa-chevron-right" style="color: #999; font-size: 12px;"></i>
+                </div>
+            </div>
+            <!-- The list where cart items will be dynamically rendered by script.js -->
+            <div class="cart-items-list" id="cartItemsList">
+                 <div class="empty-cart">
+                    <i class="fas fa-shopping-cart"></i>
+                    <p>Tu carrito está vacío</p>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- =================================================================== -->
+    <!-- BOTTOM BARS: Swapped based on the current view                      -->
+    <!-- =================================================================== -->
+
+    <!-- Bottom Bar for Products View (Visible by default) -->
+    <div class="bottom-bar" id="productsBottomBar">
+      <button class="add-cart-btn" onclick="addAllToCart()">
+        Añadir al carrito
+      </button>
+      <div class="discount-label text-center text-white">31% DE DESCUENTO</div>
+    </div>
+
+    <!-- Checkout Bar for Cart View (Initially hidden) -->
+    <div class="checkout-bar" id="cartCheckoutBar" style="display: none;">
+        <div class="total-row">
+            <div class="total-label">Total:</div>
+            <div class="total-prices">
+                <span class="total-old" id="totalOld">$0</span>
+                <span class="total-current" id="totalCurrent">$0</span>
+                <i class="fas fa-chevron-up expand-icon"></i>
+            </div>
+        </div>
+        <button class="checkout-btn" onclick="checkout()">
+            Hacer pedido (<span id="checkoutCount">0</span>)
+            <div class="discount-label">-0% tiempo limitado</div>
+        </button>
+    </div>
+    
+    <!-- =================================================================== -->
+    <!-- SCRIPTS                                                           -->
+    <!-- =================================================================== -->
+    <script src="script.js"></script>
+        <script src="https'://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/js/bootstrap.bundle.min.js'"
+      integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
+      crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+</body>
+</html>
