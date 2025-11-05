@@ -779,6 +779,12 @@
         const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
         document.getElementById('topCartCount').textContent = totalItems;
         document.getElementById('cartItemCount').textContent = cart.length;
+
+        // Actualizar también el contador del nuevo carrito flotante
+        const floatingCartBadge = document.getElementById('floatingCartBadge');
+        if (floatingCartBadge) {
+            floatingCartBadge.textContent = totalItems;
+        }
     }
 
     /**
@@ -809,6 +815,87 @@
             cartCheckoutBar.style.display = 'block';
             renderCartItems(); // Re-renderizar el carrito para asegurar que esté actualizado
         }
+    }
+
+    /**
+     * Inicializa la funcionalidad de arrastrar para el carrito flotante.
+     * Distingue entre un clic (para abrir el carrito) y un arrastre (para moverlo).
+     */
+    function initDraggableCart() {
+        const floatingCart = document.getElementById('floatingCart');
+        if (!floatingCart) return;
+
+        let isDragging = false;
+        let hasMoved = false;
+        let offsetX, offsetY;
+
+        // Función para manejar el inicio del arrastre (mouse y touch)
+        function dragStart(e) {
+            isDragging = true;
+            hasMoved = false;
+            floatingCart.querySelector('.floating-cart-icon').classList.add('grabbing');
+
+            const rect = floatingCart.getBoundingClientRect();
+            // Determinar las coordenadas del evento (mouse o touch)
+            const clientX = e.type === 'touchstart' ? e.touches[0].clientX : e.clientX;
+            const clientY = e.type === 'touchstart' ? e.touches[0].clientY : e.clientY;
+
+            offsetX = clientX - rect.left;
+            offsetY = clientY - rect.top;
+
+            // Prevenir la selección de texto mientras se arrastra
+            document.body.style.userSelect = 'none';
+        }
+
+        // Función para manejar el movimiento (mouse y touch)
+        function dragMove(e) {
+            if (!isDragging) return;
+
+            e.preventDefault(); // Prevenir el scroll en dispositivos táctiles
+            hasMoved = true;
+
+            const clientX = e.type === 'touchmove' ? e.touches[0].clientX : e.clientX;
+            const clientY = e.type === 'touchmove' ? e.touches[0].clientY : e.clientY;
+
+            let newX = clientX - offsetX;
+            let newY = clientY - offsetY;
+
+            // Limitar el movimiento dentro de la ventana visible
+            const viewportWidth = window.innerWidth;
+            const viewportHeight = window.innerHeight;
+            const elemWidth = floatingCart.offsetWidth;
+            const elemHeight = floatingCart.offsetHeight;
+
+            newX = Math.max(0, Math.min(newX, viewportWidth - elemWidth));
+            newY = Math.max(0, Math.min(newY, viewportHeight - elemHeight));
+
+            floatingCart.style.left = `${newX}px`;
+            floatingCart.style.top = `${newY}px`;
+            // Eliminar las propiedades 'bottom' y 'right' para que 'top' y 'left' tomen el control
+            floatingCart.style.bottom = 'auto';
+            floatingCart.style.right = 'auto';
+        }
+
+        // Función para manejar el final del arrastre (mouse y touch)
+        function dragEnd() {
+            isDragging = false;
+            floatingCart.querySelector('.floating-cart-icon').classList.remove('grabbing');
+            document.body.style.userSelect = 'auto';
+
+            // Si no se movió, se considera un clic
+            if (!hasMoved) {
+                toggleView();
+            }
+        }
+
+        // Asignar los eventos
+        floatingCart.addEventListener('mousedown', dragStart);
+        document.addEventListener('mousemove', dragMove);
+        document.addEventListener('mouseup', dragEnd);
+
+        floatingCart.addEventListener('touchstart', dragStart, { passive: false });
+        document.addEventListener('touchmove', dragMove, { passive: false });
+        document.addEventListener('touchend', dragEnd);
     }
 
     /**
@@ -889,6 +976,7 @@
         exposeFunctionsToGlobal();
         renderProducts();
         renderCartItems();
+        initDraggableCart(); // Activar el carrito arrastrable
     });
 
 })(); // Fin de la IIFE
