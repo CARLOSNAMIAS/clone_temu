@@ -117,6 +117,17 @@
             hasVideo: true
         },
         {
+            id: 14,
+            name: "Cámara de Seguridad WiFi 1080p",
+            image: "https://picsum.photos/seed/Camara/400/400",
+            price: 95000,
+            oldPrice: 150000,
+            rating: 4.5,
+            sales: "8K+",
+            badge: "Solo hay 50",
+            hasVideo: true
+        },
+        {
             id: 11,
             name: "Reloj Inteligente Deportivo",
             image: "https://picsum.photos/seed/Reloj/400/400",
@@ -187,6 +198,17 @@
             hasVideo: false
         },
         {
+            id: 14,
+            name: "Cámara de Seguridad WiFi 1080p",
+            image: "https://picsum.photos/seed/Camara/400/400",
+            price: 95000,
+            oldPrice: 150000,
+            rating: 4.5,
+            sales: "8K+",
+            badge: "Solo hay 50",
+            hasVideo: true
+        },
+        {
             id: 17,
             name: "Cargador Inalámbrico Rápido 3 en 1",
             image: "https://picsum.photos/seed/Cargador/400/400",
@@ -210,6 +232,17 @@
             hasVideo: true
         },
         {
+            id: 15,
+            name: "Mochila Antirrobo para Portátil",
+            image: "https://picsum.photos/seed/Mochila/400/400",
+            price: 120000,
+            oldPrice: 200000,
+            rating: 4.8,
+            sales: "15K+",
+            badge: "Mejor Calificado",
+            hasVideo: false
+        },
+        {
             id: 19,
             name: "Freidora de Aire Digital 5.5L",
             image: "https://picsum.photos/seed/Freidora/400/400",
@@ -219,6 +252,18 @@
             sales: "30K+",
             badge: "Más Vendido",
             brand: "Philips",
+            hasVideo: false
+        },
+        {
+            id: 1,
+            name: "Altavoces Inalámbricos Portátiles",
+            image: "https://images.unsplash.com/photo-1608043152269-423dbba4e7e1?w=400&h=400&fit=crop",
+            price: 89344,
+            oldPrice: 268598,
+            rating: 5,
+            sales: "14K+",
+            badge: "Mejor Calificado",
+            brand: "XIAOMI",
             hasVideo: false
         }
     ];
