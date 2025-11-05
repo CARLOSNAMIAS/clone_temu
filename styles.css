@@ -21,14 +21,20 @@ body {
 
 .top-header {
     background: white;
-    padding: 12px 16px;
-    display: flex;
-    align-items: center;
-    gap: 12px;
     box-shadow: 0 2px 4px rgba(0,0,0,0.08);
     position: sticky;
     top: 0;
     z-index: 100;
+}
+
+.header-content {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    width: 100%;
+    max-width: 1600px; /* Max width for content */
+    margin: 0 auto; /* Center the content */
+    padding: 12px 16px;
 }
 
 .back-btn {
@@ -880,7 +886,7 @@ body {
         padding: 12px;
     }
     
-    .top-header {
+    .header-content {
         padding: 16px 24px;
     }
     
@@ -905,12 +911,9 @@ body {
         padding: 16px;
     }
     
-    .top-header {
+    .header-content {
         padding: 16px 32px;
         max-width: 1200px;
-        margin: 0 auto;
-        left: 0;
-        right: 0;
     }
     
     .product-card:hover {
@@ -946,10 +949,8 @@ body {
         padding: 20px;
     }
     
-    .top-header {
+    .header-content {
         padding: 18px 40px;
-        max-width: 1200px;
-        margin: 0 auto;
     }
     
     .product-card:hover {
@@ -994,10 +995,8 @@ body {
         padding: 24px;
     }
     
-    .top-header {
+    .header-content {
         padding: 20px 48px;
-        max-width: 1400px;
-        margin: 0 auto;
     }
     
     .temu-logo {
@@ -1037,10 +1036,8 @@ body {
         padding: 28px;
     }
     
-    .top-header {
+    .header-content {
         padding: 20px 60px;
-        max-width: 1600px;
-        margin: 0 auto;
     }
     
     .temu-logo {
@@ -1087,7 +1084,7 @@ body {
         padding-bottom: 80px;
     }
     
-    .top-header {
+    .header-content {
         padding: 8px 12px;
     }
     

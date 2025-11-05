@@ -28,22 +28,24 @@
     <!-- TOP HEADER: Visible on all views                                    -->
     <!-- =================================================================== -->
     <header class="top-header">
-        <!-- Back button, initially hidden. Shown only in cart view. -->
-        <button class="back-btn" onclick="toggleView()" aria-label="Volver" style="display: none;">
-            <i class="fas fa-arrow-left"></i>
-        </button>
-        <div class="temu-logo">TEMU</div>
-        <div class="search-box">
-            <i class="fas fa-search" style="color: #999;"></i>
-            <input type="text" placeholder="explorado...">
-        </div>
-        <div class="top-icons">
-            <i class="fas fa-bars"></i>
-            <i class="fas fa-user"></i>
-            <!-- Cart icon toggles the view between products and cart -->
-            <div class="cart-icon-wrapper" onclick="toggleView()">
-                <i class="fas fa-shopping-cart"></i>
-                <div class="cart-count" id="topCartCount">0</div>
+        <div class="header-content">
+            <!-- Back button, initially hidden. Shown only in cart view. -->
+            <button class="back-btn" onclick="toggleView()" aria-label="Volver" style="display: none;">
+                <i class="fas fa-arrow-left"></i>
+            </button>
+            <div class="temu-logo">TEMU</div>
+            <div class="search-box">
+                <i class="fas fa-search" style="color: #999;"></i>
+                <input type="text" placeholder="explorado...">
+            </div>
+            <div class="top-icons">
+                <i class="fas fa-bars"></i>
+                <i class="fas fa-user"></i>
+                <!-- Cart icon toggles the view between products and cart -->
+                <div class="cart-icon-wrapper" onclick="toggleView()">
+                    <i class="fas fa-shopping-cart"></i>
+                    <div class="cart-count" id="topCartCount">0</div>
+                </div>
             </div>
         </div>
     </header>
