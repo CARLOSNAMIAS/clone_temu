@@ -736,3 +736,17 @@ body {
         grid-template-columns: repeat(5, 1fr);
     }
 }
+
+/* Ajuste para el botón 'add-to-cart' en pantallas muy pequeñas */
+@media (max-width: 576px) {
+    .add-to-cart {
+        width: 32px;
+        height: 32px;
+        bottom: 8px;
+        right: 8px;
+        font-size: 18px; /* Ajustar el tamaño del icono si es necesario */
+    }
+    .add-to-cart i {
+        font-size: 16px;
+    }
+}
