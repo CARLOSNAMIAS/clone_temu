@@ -25,248 +25,7 @@
     // 1. DATOS Y GESTIÓN DEL ESTADO
     // ===================================================================
 
-    /**
-     * @const {Array<Object>} allProducts
-     * @description Un array de objetos de productos disponibles para la compra.
-     * @security En una aplicación real, estos datos deberían ser obtenidos desde un servidor a través de una API segura.
-     *           Nunca confíes en los datos del producto definidos en el lado del cliente para transacciones.
-     */
-    const allProducts = [
-        {
-            id: 1,
-            name: "Altavoces Inalámbricos Portátiles",
-            image: "https://images.unsplash.com/photo-1608043152269-423dbba4e7e1?w=400&h=400&fit=crop",
-            price: 89344,
-            oldPrice: 268598,
-            rating: 5,
-            sales: "14K+",
-            badge: "Mejor Calificado",
-            brand: "XIAOMI",
-            hasVideo: false
-        },
-
-        
-        {
-            id: 2,
-            name: "Palanca de Freno y Embrague CNC",
-            image: "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=400&h=400&fit=crop",
-            price: 32666,
-            oldPrice: 56559,
-            rating: 4.5,
-            sales: "1.2K+",
-            badge: "Solo hay 75",
-            hasVideo: true
-        },
-        {
-            id: 3,
-            name: "Bombilla LED individual",
-            image: "https://images.unsplash.com/photo-1524484485831-a92ffc0de03f?w=400&h=400&fit=crop",
-            price: 42052,
-            oldPrice: 79541,
-            rating: 4,
-            sales: "149",
-            badge: "BLACK FRIDAY",
-            badgeType: "bf",
-            hasVideo: false
-        },
-        {
-            id: 4,
-            name: "Soporte de montaje de pared",
-            image: "https://images.unsplash.com/photo-1589939705384-5185137a7f0f?w=400&h=400&fit=crop",
-            price: 5934,
-            oldPrice: 17323,
-            rating: 5,
-            sales: "32",
-            badge: "Solo hay 18",
-            badgeType: "bf",
-            hasVideo: false
-        },
-        {
-            id: 5,
-            name: "Foco LED Exterior Impermeable",
-            image: "https://images.unsplash.com/photo-1565814636199-ae8133055c1c?w=400&h=400&fit=crop",
-            price: 10812,
-            oldPrice: 17236,
-            rating: 4.5,
-            sales: "856",
-            badge: "Mejor Calificado",
-            hasVideo: false
-        },
-        {
-            id: 6,
-            name: "Kit de Herramientas Profesional",
-            image: "https://images.unsplash.com/photo-1530124566582-a618bc2615dc?w=400&h=400&fit=crop",
-            price: 67890,
-            oldPrice: 98765,
-            rating: 5,
-            sales: "2.3K+",
-            badge: "BLACK FRIDAY",
-            badgeType: "bf",
-            hasVideo: true
-        },
-        {
-            id: 10,
-            name: "Auriculares Bluetooth con Cancelación de Ruido",
-            image: "https://picsum.photos/seed/Auriculares/400/400",
-            price: 159900,
-            oldPrice: 299900,
-            rating: 4.8,
-            sales: "25K+",
-            badge: "Más Vendido",
-            brand: "Sony",
-            hasVideo: true
-        },
-        {
-            id: 14,
-            name: "Cámara de Seguridad WiFi 1080p",
-            image: "https://picsum.photos/seed/Camara/400/400",
-            price: 95000,
-            oldPrice: 150000,
-            rating: 4.5,
-            sales: "8K+",
-            badge: "Solo hay 50",
-            hasVideo: true
-        },
-        {
-            id: 11,
-            name: "Reloj Inteligente Deportivo",
-            image: "https://picsum.photos/seed/Reloj/400/400",
-            price: 210500,
-            oldPrice: 350000,
-            rating: 4.7,
-            sales: "18K+",
-            badge: "Oferta Flash",
-            badgeType: "bf",
-            hasVideo: true
-        },
-        {
-            id: 12,
-            name: "Teclado Mecánico RGB para Gaming",
-            image: "https://picsum.photos/seed/Teclado/400/400",
-            price: 180000,
-            oldPrice: 250000,
-            rating: 4.9,
-            sales: "12K+",
-            badge: "BLACK FRIDAY",
-            badgeType: "bf",
-            hasVideo: false
-        },
-        {
-            id: 13,
-            name: "Mouse Inalámbrico Ergonómico",
-            image: "https://picsum.photos/seed/Mouse/400/400",
-            price: 75000,
-            oldPrice: 120000,
-            rating: 4.6,
-            sales: "20K+",
-            badge: "Mejor Calificado",
-            brand: "Logitech",
-            hasVideo: false
-        },
-        {
-            id: 14,
-            name: "Cámara de Seguridad WiFi 1080p",
-            image: "https://picsum.photos/seed/Camara/400/400",
-            price: 95000,
-            oldPrice: 150000,
-            rating: 4.5,
-            sales: "8K+",
-            badge: "Solo hay 50",
-            hasVideo: true
-        },
-        {
-            id: 15,
-            name: "Mochila Antirrobo para Portátil",
-            image: "https://picsum.photos/seed/Mochila/400/400",
-            price: 120000,
-            oldPrice: 200000,
-            rating: 4.8,
-            sales: "15K+",
-            badge: "Mejor Calificado",
-            hasVideo: false
-        },
-        {
-            id: 16,
-            name: "Botella de Agua Inteligente",
-            image: "https://picsum.photos/seed/Botella/400/400",
-            price: 60000,
-            oldPrice: 100000,
-            rating: 4.4,
-            sales: "5K+",
-            badge: "Oferta",
-            badgeType: "bf",
-            hasVideo: false
-        },
-        {
-            id: 14,
-            name: "Cámara de Seguridad WiFi 1080p",
-            image: "https://picsum.photos/seed/Camara/400/400",
-            price: 95000,
-            oldPrice: 150000,
-            rating: 4.5,
-            sales: "8K+",
-            badge: "Solo hay 50",
-            hasVideo: true
-        },
-        {
-            id: 17,
-            name: "Cargador Inalámbrico Rápido 3 en 1",
-            image: "https://picsum.photos/seed/Cargador/400/400",
-            price: 85000,
-            oldPrice: 140000,
-            rating: 4.7,
-            sales: "10K+",
-            badge: "BLACK FRIDAY",
-            badgeType: "bf",
-            hasVideo: true
-        },
-        {
-            id: 18,
-            name: "Mini Proyector Portátil Full HD",
-            image: "https://picsum.photos/seed/Proyector/400/400",
-            price: 350000,
-            oldPrice: 500000,
-            rating: 4.6,
-            sales: "7K+",
-            badge: "Mejor Calificado",
-            hasVideo: true
-        },
-        {
-            id: 15,
-            name: "Mochila Antirrobo para Portátil",
-            image: "https://picsum.photos/seed/Mochila/400/400",
-            price: 120000,
-            oldPrice: 200000,
-            rating: 4.8,
-            sales: "15K+",
-            badge: "Mejor Calificado",
-            hasVideo: false
-        },
-        {
-            id: 19,
-            name: "Freidora de Aire Digital 5.5L",
-            image: "https://picsum.photos/seed/Freidora/400/400",
-            price: 280000,
-            oldPrice: 450000,
-            rating: 4.9,
-            sales: "30K+",
-            badge: "Más Vendido",
-            brand: "Philips",
-            hasVideo: false
-        },
-        {
-            id: 1,
-            name: "Altavoces Inalámbricos Portátiles",
-            image: "https://images.unsplash.com/photo-1608043152269-423dbba4e7e1?w=400&h=400&fit=crop",
-            price: 89344,
-            oldPrice: 268598,
-            rating: 5,
-            sales: "14K+",
-            badge: "Mejor Calificado",
-            brand: "XIAOMI",
-            hasVideo: false
-        }
-    ];
+    let allProducts = [];
 
     /**
      * @const {Array<Object>} initialCartItems
@@ -373,6 +132,31 @@
         const icon = document.createElement('i');
         icon.classList.add(...classes);
         return icon;
+    }
+
+    /**
+     * Establece una posición inicial aleatoria para un elemento dentro de los límites de la ventana.
+     * @param {HTMLElement} element - El elemento HTML a posicionar.
+     */
+    function setRandomInitialPosition(element) {
+        const viewportWidth = window.innerWidth;
+        const viewportHeight = window.innerHeight;
+        const elemWidth = element.offsetWidth;
+        const elemHeight = element.offsetHeight;
+
+        // Calcular límites para asegurar que el elemento esté completamente visible
+        const maxX = viewportWidth - elemWidth;
+        const maxY = viewportHeight - elemHeight;
+
+        // Generar posiciones aleatorias
+        const randomX = Math.floor(Math.random() * maxX);
+        const randomY = Math.floor(Math.random() * maxY);
+
+        element.style.left = `${randomX}px`;
+        element.style.top = `${randomY}px`;
+        // Asegurarse de que no haya propiedades 'right' o 'bottom' que interfieran
+        element.style.right = 'auto';
+        element.style.bottom = 'auto';
     }
 
 
@@ -977,13 +761,35 @@
     }
 
     /**
-     * Configura la aplicación cuando el DOM está completamente cargado.
+     * Inicializa la aplicación: obtiene los datos de los productos y renderiza los componentes iniciales.
      */
-    document.addEventListener('DOMContentLoaded', () => {
+    async function initializeApp() {
         exposeFunctionsToGlobal();
-        renderProducts();
-        renderCartItems();
-        initDraggableCart(); // Activar el carrito arrastrable
-    });
+        try {
+            const response = await fetch('products.json');
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
+            allProducts = await response.json();
+            
+            // Una vez que los productos se han cargado, renderizamos la UI
+            renderProducts();
+            renderCartItems();
+            const floatingCart = document.getElementById('floatingCart');
+            if (floatingCart) {
+                setRandomInitialPosition(floatingCart);
+            }
+            initDraggableCart(); // Activar el carrito arrastrable
+
+        } catch (error) {
+            console.error("No se pudieron cargar los productos:", error);
+            const grid = document.getElementById('productGrid');
+            if (grid) {
+                grid.innerHTML = '<p style="color: red; text-align: center; grid-column: 1 / -1;">Error: No se pudieron cargar los productos. Intenta recargar la página.</p>';
+            }
+        }
+    }
+
+    document.addEventListener('DOMContentLoaded', initializeApp);
 
 })(); // Fin de la IIFE

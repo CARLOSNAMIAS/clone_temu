@@ -1148,8 +1148,6 @@ body {
 
 .floating-cart-container {
     position: fixed;
-    bottom: 100px;
-    right: 20px;
     z-index: 1050; /* Superior a otros elementos */
     display: inline-block;
     user-select: none; /* Evitar selección de texto al arrastrar */
