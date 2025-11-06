@@ -884,7 +884,14 @@
 
             // Si no se movió, se considera un clic
             if (!hasMoved) {
-                toggleView();
+                const cartView = document.getElementById('cartView');
+                const isCartVisible = cartView && cartView.style.display !== 'none';
+                
+                // Solo abrir la vista del carrito si no está ya visible.
+                // Si ya está visible, el clic no hace nada.
+                if (!isCartVisible) {
+                    toggleView();
+                }
             }
         }
 
