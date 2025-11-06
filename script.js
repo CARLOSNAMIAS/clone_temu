@@ -610,24 +610,25 @@
         if (!floatingCart) return;
 
         let isDragging = false;
-        let hasMoved = false;
-        let offsetX, offsetY;
+        let startX, startY, offsetX, offsetY;
+        let hasMovedSignificantly = false;
+        const clickThreshold = 15; // Aumentado a 15px para ser menos sensible
 
         // Función para manejar el inicio del arrastre (mouse y touch)
         function dragStart(e) {
             isDragging = true;
-            hasMoved = false;
+            hasMovedSignificantly = false;
             floatingCart.querySelector('.floating-cart-icon').classList.add('grabbing');
 
             const rect = floatingCart.getBoundingClientRect();
-            // Determinar las coordenadas del evento (mouse o touch)
             const clientX = e.type === 'touchstart' ? e.touches[0].clientX : e.clientX;
             const clientY = e.type === 'touchstart' ? e.touches[0].clientY : e.clientY;
 
+            startX = clientX;
+            startY = clientY;
             offsetX = clientX - rect.left;
             offsetY = clientY - rect.top;
 
-            // Prevenir la selección de texto mientras se arrastra
             document.body.style.userSelect = 'none';
         }
 
@@ -635,29 +636,34 @@
         function dragMove(e) {
             if (!isDragging) return;
 
-            e.preventDefault(); // Prevenir el scroll en dispositivos táctiles
-            hasMoved = true;
-
             const clientX = e.type === 'touchmove' ? e.touches[0].clientX : e.clientX;
             const clientY = e.type === 'touchmove' ? e.touches[0].clientY : e.clientY;
 
-            let newX = clientX - offsetX;
-            let newY = clientY - offsetY;
+            const moveX = Math.abs(clientX - startX);
+            const moveY = Math.abs(clientY - startY);
 
-            // Limitar el movimiento dentro de la ventana visible
-            const viewportWidth = window.innerWidth;
-            const viewportHeight = window.innerHeight;
-            const elemWidth = floatingCart.offsetWidth;
-            const elemHeight = floatingCart.offsetHeight;
+            if (moveX > clickThreshold || moveY > clickThreshold) {
+                hasMovedSignificantly = true;
+                if (e.cancelable) {
+                    e.preventDefault();
+                }
 
-            newX = Math.max(0, Math.min(newX, viewportWidth - elemWidth));
-            newY = Math.max(0, Math.min(newY, viewportHeight - elemHeight));
+                let newX = clientX - offsetX;
+                let newY = clientY - offsetY;
 
-            floatingCart.style.left = `${newX}px`;
-            floatingCart.style.top = `${newY}px`;
-            // Eliminar las propiedades 'bottom' y 'right' para que 'top' y 'left' tomen el control
-            floatingCart.style.bottom = 'auto';
-            floatingCart.style.right = 'auto';
+                const viewportWidth = window.innerWidth;
+                const viewportHeight = window.innerHeight;
+                const elemWidth = floatingCart.offsetWidth;
+                const elemHeight = floatingCart.offsetHeight;
+
+                newX = Math.max(0, Math.min(newX, viewportWidth - elemWidth));
+                newY = Math.max(0, Math.min(newY, viewportHeight - elemHeight));
+
+                floatingCart.style.left = `${newX}px`;
+                floatingCart.style.top = `${newY}px`;
+                floatingCart.style.bottom = 'auto';
+                floatingCart.style.right = 'auto';
+            }
         }
 
         // Función para manejar el final del arrastre (mouse y touch)
@@ -666,13 +672,10 @@
             floatingCart.querySelector('.floating-cart-icon').classList.remove('grabbing');
             document.body.style.userSelect = 'auto';
 
-            // Si no se movió, se considera un clic
-            if (!hasMoved) {
+            if (!hasMovedSignificantly) {
                 const cartView = document.getElementById('cartView');
                 const isCartVisible = cartView && cartView.style.display !== 'none';
                 
-                // Solo abrir la vista del carrito si no está ya visible.
-                // Si ya está visible, el clic no hace nada.
                 if (!isCartVisible) {
                     toggleView();
                 }
