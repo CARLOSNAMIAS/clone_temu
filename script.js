@@ -31,56 +31,20 @@
      * @const {Array<Object>} initialCartItems
      * @description Un array de objetos de productos para pre-poblar el carrito para demostración.
      */
-    const initialCartItems = [
-        {
-            id: 7,
-            name: "Adaptador de Audio USB-C a 3.5mm",
-            image: "https://images.unsplash.com/photo-1625948515291-69613efd103f?w=400&h=400&fit=crop",
-            variant: "Interfaz Roja/1 pieza",
-            price: 5108,
-            oldPrice: 11544,
-            badge: "Black Friday",
-            badgeType: "bf",
-            stock: "Red head 1pcs",
-            quantity: 1
-        },
-        {
-            id: 8,
-            name: "Plantillas Autoadhesivas Gruesas para el talón",
-            image: "https://images.unsplash.com/photo-1603487742131-4160ec999306?w=400&h=400&fit=crop",
-            variant: "1 par de negro",
-            price: 4016,
-            oldPrice: 50406,
-            badge: "Mega oferta",
-            badgeType: "mega",
-            quantity: 1
-        },
-        {
-            id: 9,
-            name: "Heyword Brand 1pc H4 BA20D P15d",
-            image: "https://images.unsplash.com/photo-1565814636199-ae8133055c1c?w=400&h=400&fit=crop",
-            variant: "H4",
-            price: 10895,
-            oldPrice: 15497,
-            badge: "BLACK FRIDAY",
-            badgeType: "bf",
-            stock: "solo 163 disponibles",
-            quantity: 1
-        }
-    ];
+    const initialCartItems = [];
 
     /**
      * @let {Array<Object>} cart
      * @description El estado principal del carrito de compras. Inicializado con artículos de demostración.
      * @security Al estar dentro de una IIFE, esta variable no es accesible directamente desde la consola del navegador.
      */
-    let cart = [...initialCartItems];
+    let cart = [];
 
     /**
      * @let {Array<number>} selectedItems
      * @description Un array de índices correspondientes a los artículos en el array `cart` que están seleccionados.
      */
-    let selectedItems = cart.map((_, index) => index); // Seleccionar todos los artículos iniciales por defecto
+    let selectedItems = []; // Seleccionar todos los artículos iniciales por defecto
 
     // ===================================================================
     // 2. FUNCIONES DE UTILIDAD
@@ -612,25 +576,7 @@
         let isDragging = false;
         let startX, startY, offsetX, offsetY;
         let hasMovedSignificantly = false;
-        const clickThreshold = 15; // Aumentado a 15px para ser menos sensible
-
-        // Función para manejar el inicio del arrastre (mouse y touch)
-        function dragStart(e) {
-            isDragging = true;
-            hasMovedSignificantly = false;
-            floatingCart.querySelector('.floating-cart-icon').classList.add('grabbing');
-
-            const rect = floatingCart.getBoundingClientRect();
-            const clientX = e.type === 'touchstart' ? e.touches[0].clientX : e.clientX;
-            const clientY = e.type === 'touchstart' ? e.touches[0].clientY : e.clientY;
-
-            startX = clientX;
-            startY = clientY;
-            offsetX = clientX - rect.left;
-            offsetY = clientY - rect.top;
-
-            document.body.style.userSelect = 'none';
-        }
+        const clickThreshold = 20; // Aumentado a 20px para ser menos sensible
 
         // Función para manejar el movimiento (mouse y touch)
         function dragMove(e) {
@@ -644,9 +590,6 @@
 
             if (moveX > clickThreshold || moveY > clickThreshold) {
                 hasMovedSignificantly = true;
-                if (e.cancelable) {
-                    e.preventDefault();
-                }
 
                 let newX = clientX - offsetX;
                 let newY = clientY - offsetY;
@@ -680,16 +623,41 @@
                     toggleView();
                 }
             }
+
+            // Remover los listeners de movimiento y fin
+            document.removeEventListener('mousemove', dragMove);
+            document.removeEventListener('mouseup', dragEnd);
+            document.removeEventListener('touchmove', dragMove);
+            document.removeEventListener('touchend', dragEnd);
         }
 
-        // Asignar los eventos
-        floatingCart.addEventListener('mousedown', dragStart);
-        document.addEventListener('mousemove', dragMove);
-        document.addEventListener('mouseup', dragEnd);
+        // Función para manejar el inicio del arrastre (mouse y touch)
+        function dragStart(e) {
+            isDragging = true;
+            hasMovedSignificantly = false;
+            floatingCart.querySelector('.floating-cart-icon').classList.add('grabbing');
 
-        floatingCart.addEventListener('touchstart', dragStart, { passive: false });
-        document.addEventListener('touchmove', dragMove, { passive: false });
-        document.addEventListener('touchend', dragEnd);
+            const rect = floatingCart.getBoundingClientRect();
+            const clientX = e.type === 'touchstart' ? e.touches[0].clientX : e.clientX;
+            const clientY = e.type === 'touchstart' ? e.touches[0].clientY : e.clientY;
+
+            startX = clientX;
+            startY = clientY;
+            offsetX = clientX - rect.left;
+            offsetY = clientY - rect.top;
+
+            document.body.style.userSelect = 'none';
+
+            // Añadir los listeners de movimiento y fin
+            document.addEventListener('mousemove', dragMove);
+            document.addEventListener('mouseup', dragEnd);
+            document.addEventListener('touchmove', dragMove);
+            document.addEventListener('touchend', dragEnd);
+        }
+
+        // Asignar los eventos de inicio
+        floatingCart.addEventListener('mousedown', dragStart);
+        floatingCart.addEventListener('touchstart', dragStart);
     }
 
     /**
